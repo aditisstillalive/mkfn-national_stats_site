@@ -3,13 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Weeknight Kitchen</title>
-<link rel="stylesheet" href="style.css">
+<title>Angka Nusantara · Indonesia in figures</title>
+<meta name="description" content="Independent, sourced statistics on Indonesia: population, economy, work, health, education, environment and its 38 provinces.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2314213d'/%3E%3Ccircle cx='9' cy='19' r='3' fill='%23c2410c'/%3E%3Ccircle cx='16' cy='13' r='3' fill='%23f2c14e'/%3E%3Ccircle cx='23' cy='18' r='3' fill='%2312a594'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
 <script type="module" src="main.js"></script>
 </head>
 <body>
-<header><a href="#/">Weeknight Kitchen</a></header>
-<main id="app"></main>
-<footer>Six recipes for busy evenings.</footer>
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead">
+  <div class="masthead__bar">
+    <a class="brand" href="#/" aria-label="Angka Nusantara home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7"/><circle cx="9" cy="19" r="3"/><circle cx="16" cy="13" r="3"/><circle cx="23" cy="18" r="3"/></svg>
+      <span class="brand__name">Angka Nusantara</span>
+      <span class="brand__tag">Indonesia in figures</span>
+    </a>
+    <button class="icon-btn menu-btn" id="menu-btn" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <div class="site-nav__primary">
+        <a href="#/">Overview</a>
+        <a href="#/regions">Provinces</a>
+        <a href="#/compare">Compare</a>
+        <a href="#/data">Data catalogue</a>
+        <a href="#/about">Sources</a>
+      </div>
+      <div class="site-nav__topics" aria-label="Topics">
+        <a href="#/topic/people">People</a>
+        <a href="#/topic/economy">Economy</a>
+        <a href="#/topic/work">Work &amp; living</a>
+        <a href="#/topic/health">Health</a>
+        <a href="#/topic/education">Education</a>
+        <a href="#/topic/environment">Environment</a>
+        <a href="#/topic/infrastructure">Infrastructure</a>
+      </div>
+    </nav>
+    <button class="icon-btn theme-btn" id="theme-btn" aria-label="Switch colour theme"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 1 0 15z" fill="currentColor"/></svg></button>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <p class="loading">Loading Indonesia's statistics…</p>
+</main>
+<footer class="footer">
+  <div class="footer__inner">
+    <p><strong>Angka Nusantara</strong> is an independent guide to Indonesia's official and international statistics. It is not affiliated with BPS-Statistics Indonesia or the World Bank.</p>
+    <p>Figures: World Bank World Development Indicators (update of 11 Nov 2026) and BPS-Statistics Indonesia mid-2025 provincial estimates. <a href="#/about">Sources &amp; methods</a> · <a href="#/data">All data</a></p>
+  </div>
+</footer>
 </body>
 </html>
