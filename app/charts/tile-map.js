@@ -53,7 +53,7 @@ export function tileMap(container, provinces, options) {
     const p = byIso.get(link.dataset.iso);
     const box = link.getBoundingClientRect();
     const host = container.getBoundingClientRect();
-    tooltip.show(`<b>${esc(p.name)}</b><div>${esc(options.format(options.valueOf(p)))}</div>`, box.left - host.left + box.width / 2, box.top - host.top);
+    tooltip.show(`<b>${esc(p.name)}</b><div>${esc(options.format(options.valueOf(p)))}</div>`, box.left - host.left + container.scrollLeft + box.width / 2, box.top - host.top);
   };
   for (const link of svg.querySelectorAll('a')) {
     link.addEventListener('pointerenter', () => show(link));

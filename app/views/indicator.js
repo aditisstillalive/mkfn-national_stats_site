@@ -55,7 +55,7 @@ export function render([id], query) {
         <button type="button" class="btn" id="csv-btn">Download CSV</button>
         ${peer ? `<a class="btn" href="#/compare/${peer.id}">Compare with neighbours</a>` : ''}
       </div>
-      <p class="card__sub">${esc(d.unit)}, ${first[0]}–${year}. Hover or tap the chart for each year's value.</p>
+      <p class="card__sub">Unit: ${esc(d.unit)} · ${first[0]}–${year} · hover or tap the chart for each year's value</p>
       <div id="ind-chart"></div>
       <p class="source">Source: ${esc(d.origin)}. World Bank WDI series <a href="${WDI_URL}${d.code}?locations=ID" rel="noopener">${d.code}</a>, updated ${WDI_UPDATED}.</p>
     </section>

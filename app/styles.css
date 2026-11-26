@@ -258,6 +258,10 @@ dl.meta dd { margin: 0; }
 .tip b { font-variant-numeric: tabular-nums; }
 .tip i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
 .tilemap svg { display: block; width: 100%; height: auto; }
+@media (max-width: 600px) {
+  .tilemap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tilemap svg { min-width: 560px; }
+}
 .tilemap a rect { stroke: var(--card); stroke-width: 2; transition: opacity .15s; }
 .tilemap a:hover rect, .tilemap a:focus rect { stroke: var(--ink); stroke-width: 2.5; }
 .tilemap a.is-selected rect { stroke: var(--accent); stroke-width: 3; }
