@@ -35,6 +35,7 @@ export function render() {
       <div class="card">
         <h3>Reading the numbers well</h3>
         <ul>
+          <li><b>Two national populations</b>: BPS counts 284.4 million (mid-2025, the sum of the provinces) and the World Bank, using the UN's model, 285.7 million. The cover and province pages use BPS; trends and comparisons use the World Bank. <a href="#/indicator/population">Why two numbers</a></li>
           <li><b>Unemployment</b> is the ILO's modelled rate, built to compare countries. BPS publishes its own open unemployment rate (TPT) from Sakernas twice a year, which is defined differently.</li>
           <li><b>Poverty</b> uses Indonesia's national poverty line, set by BPS from the cost of basic needs, not an international dollar-a-day line.</li>
           <li><b>GDP in US dollars</b> moves with the rupiah: in 1998 it more than halved, mostly because the currency collapsed. Use real growth to see output.</li>

@@ -5,7 +5,7 @@ import { formatNumber } from '../lib/format.js';
 import { PEERS, PEER_METRICS, getPeerMetric } from '../data/peers.js';
 import { getIndicator, WDI_UPDATED } from '../data/indicators.js';
 import { barChart } from '../charts/bar-chart.js';
-import { WDI_URL } from './parts.js';
+import { twoNumbersNote, WDI_URL } from './parts.js';
 
 const show = (m, v) => `${m.prefix ?? ''}${formatNumber(v, m.dp)}${m.suffix ?? ''}`;
 
@@ -41,6 +41,7 @@ export function render([id]) {
       <h2>${esc(metric.name)}</h2>
       <p class="card__sub">${esc(metric.unit)}, ${metric.year}${metric.note ? ` (${esc(metric.note)})` : ''}</p>
       <p>${esc(rankSentence(metric))}</p>
+      ${twoNumbersNote(metric.id, { compact: true })}
       <div id="peer-bars"></div>
       <div class="legend"><span class="legend__key"><i style="background:var(--s2)"></i>Indonesia</span><span class="legend__key"><i style="background:var(--s1)"></i>Neighbours</span></div>
       <p class="source">Source: World Bank WDI series <a href="${WDI_URL}${metric.code}" rel="noopener">${metric.code}</a>, latest year available, updated ${WDI_UPDATED}.</p>

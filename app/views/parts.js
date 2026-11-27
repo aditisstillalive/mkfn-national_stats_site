@@ -5,6 +5,7 @@ import { changeOver, getIndicator, latestOf, pointsOf, WDI_UPDATED } from '../da
 import { sparkline } from '../charts/sparkline.js';
 import { lineChart } from '../charts/line-chart.js';
 import { EVENTS } from '../data/topics.js';
+import { formatDate, RELEASES, sourceTag, TWO_NUMBERS } from '../data/sources.js';
 
 export const WDI_URL = 'https://data.worldbank.org/indicator/';
 
@@ -32,8 +33,45 @@ export function statTile(id, { label } = {}) {
   return `<a class="tile" href="#/indicator/${d.id}">
     <span class="tile__label">${esc(label ?? d.name)}</span>
     <span class="tile__value">${esc(prefix)}${formatValue(d, value, { withUnit: false })}<span class="tile__unit">${esc(suffix.trim() || shortUnit(d))}</span></span>
-    <span class="tile__meta"><span>${year}</span>${changeBadge(d)}${sparkline(pointsOf(d, 2000))}</span>
+    <span class="tile__meta">${changeBadge(d)}${sparkline(pointsOf(d, 2000))}</span>
+    <span class="tile__src">${esc(sourceTag(d))} · ${year}</span>
   </a>`;
+}
+
+/** The national population as BPS counts it: the sum of the 38 provinces, so the cover and the map agree. */
+export function bpsPopulationTile() {
+  const { bps } = TWO_NUMBERS.population;
+  return `<a class="tile" href="#/indicator/population">
+    <span class="tile__label">Population</span>
+    <span class="tile__value">${bps.value.toFixed(1)}<span class="tile__unit">m</span></span>
+    <span class="tile__meta">Sum of the 38 provinces</span>
+    <span class="tile__src">BPS · ${bps.date}</span>
+  </a>`;
+}
+
+/** The dated releases behind the site's figures, newest first. */
+export function releasesList(limit = RELEASES.length) {
+  return `<ol class="releases">${RELEASES.slice(0, limit).map((r) => `<li>
+    <time datetime="${r.date}">${formatDate(r.date)}</time>
+    <div><span class="tag">${esc(r.agency)}</span> <a href="${r.url}" rel="noopener">${esc(r.title)}</a>
+    <p class="small muted">${esc(r.what)} <a href="${r.href}">See it here</a></p></div></li>`).join('')}</ol>`;
+}
+
+/** "Why two numbers": BPS and the World Bank side by side, with dates and the reason they differ. */
+export function twoNumbersNote(id, { compact = false } = {}) {
+  const n = TWO_NUMBERS[id];
+  if (!n) return '';
+  if (compact) {
+    return `<p class="note small">BPS puts this at <b>${esc(n.bps.text)}</b> (${n.bps.date}); the World Bank at <b>${esc(n.wdi.text)}</b> (${n.wdi.date}). <a href="#/indicator/${id}">Why two numbers</a></p>`;
+  }
+  return `<aside class="callout" aria-label="Why two numbers">
+    <h3>Why two numbers?</h3>
+    <dl class="meta">
+      <dt>BPS-Statistics Indonesia</dt><dd><b>${esc(n.bps.text)}</b>, ${n.bps.date}: sum of the 38 provinces, used on the cover and province pages</dd>
+      <dt>World Bank WDI</dt><dd><b>${esc(n.wdi.text)}</b>, ${n.wdi.date}: this series, used for trends and comparisons</dd>
+    </dl>
+    <p>${esc(n.why)}</p>
+  </aside>`;
 }
 
 function shortUnit(d) {

@@ -4,7 +4,7 @@ import { esc } from '../lib/dom.js';
 import { formatValue } from '../lib/format.js';
 import { INDICATORS, latestOf, WDI_UPDATED } from '../data/indicators.js';
 import { TOPICS, getTopic } from '../data/topics.js';
-import { changeBadge } from './parts.js';
+import { changeBadge, releasesList } from './parts.js';
 
 function row(d) {
   const { year, value } = latestOf(d);
@@ -32,7 +32,11 @@ export function render() {
     <div class="table-wrap"><table>
       <thead><tr><th>Indicator</th><th>Topic</th><th class="n">Latest</th><th class="n">Year</th><th>10-year change</th><th>Source</th></tr></thead>
       <tbody id="cat-rows">${INDICATORS.map(row).join('')}</tbody>
-    </table></div>`;
+    </table></div>
+    <section class="section">
+      <h2>Latest releases</h2>
+      <div class="card">${releasesList()}</div>
+    </section>`;
 
   return {
     title: 'Data catalogue',

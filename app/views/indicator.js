@@ -6,7 +6,8 @@ import { getIndicator, indicatorsInTopic, latestOf, pointsOf, WDI_UPDATED } from
 import { EVENTS, getTopic } from '../data/topics.js';
 import { getPeerMetric } from '../data/peers.js';
 import { lineChart } from '../charts/line-chart.js';
-import { changeBadge, WDI_URL } from './parts.js';
+import { methodOf, sourceTag } from '../data/sources.js';
+import { changeBadge, twoNumbersNote, WDI_URL } from './parts.js';
 
 const RANGES = [
   { id: 'all', label: 'All years', from: -Infinity },
@@ -44,9 +45,12 @@ export function render([id], query) {
       <div class="ind-head__value">
         <div class="big">${formatValue(d, value)}</div>
         <div class="muted small">${esc(d.unit)} · ${year}</div>
+        <div class="tile__src">${esc(sourceTag(d))} · ${year}</div>
         <div>${changeBadge(d)}</div>
       </div>
     </div>
+
+    ${twoNumbersNote(d.id)}
 
     <section class="section card">
       <div class="controls">
@@ -70,6 +74,7 @@ export function render([id], query) {
         <div class="card">
           <dl class="meta">
             <dt>Definition</dt><dd>${esc(d.about)}</dd>
+            <dt>Method</dt><dd>${esc(methodOf(d))}</dd>
             <dt>Unit</dt><dd>${esc(d.unit)}</dd>
             <dt>Coverage</dt><dd>${first[0]}–${year}, ${pointsOf(d).length} published years</dd>
             <dt>Compiled by</dt><dd>${esc(d.origin)}</dd>

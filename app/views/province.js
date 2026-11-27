@@ -5,6 +5,7 @@ import { formatNumber, ordinal } from '../lib/format.js';
 import { NATIONAL, PROVINCES, PROVINCE_SOURCE, getProvince, groupName, groupTotals, rankOf } from '../data/provinces.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
+import { twoNumbersNote } from './parts.js';
 
 function neighbours(p) {
   const sorted = [...PROVINCES].sort((a, b) => b.pop - a.pop);
@@ -20,7 +21,7 @@ export function render([iso]) {
   const { bigger, smaller } = neighbours(p);
   const nationalDensity = NATIONAL.pop / NATIONAL.area;
   const denser = p.density / nationalDensity;
-  const tile = (label, value, note) => `<div class="tile"><span class="tile__label">${label}</span><span class="tile__value">${value}</span><span class="tile__meta"><span>${note}</span></span></div>`;
+  const tile = (label, value, note) => `<div class="tile"><span class="tile__label">${label}</span><span class="tile__value">${value}</span><span class="tile__meta"><span>${note}</span></span><span class="tile__src">BPS · mid-2025</span></div>`;
 
   const html = `
     <p class="crumbs"><a href="#/">Overview</a> / <a href="#/regions">Provinces</a> / ${esc(p.name)}</p>
@@ -33,7 +34,7 @@ export function render([iso]) {
       ${tile('Share of Indonesia', `${formatNumber(share, 1)}<span class="tile__unit">%</span>`, `of ${formatNumber(NATIONAL.pop / 1e6, 1)} million`)}
       ${tile('Land area', `${formatNumber(p.area, 0)}<span class="tile__unit">km²</span>`, `${ordinal(rankOf(p, 'area'))} largest`)}
       ${tile('Population density', `${formatNumber(p.density, 0)}<span class="tile__unit">per km²</span>`, `${ordinal(rankOf(p, 'density'))} densest · national ${formatNumber(nationalDensity, 0)}`)}
-    </div></section>
+    </div>${twoNumbersNote('population', { compact: true })}</section>
 
     <section class="section grid-2">
       <article class="card">

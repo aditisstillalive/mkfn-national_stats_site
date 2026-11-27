@@ -5,9 +5,10 @@ import { INDICATORS, getIndicator, latestOf, WDI_UPDATED } from '../data/indicat
 import { TOPICS } from '../data/topics.js';
 import { NATIONAL, PROVINCES, PROVINCE_SOURCE } from '../data/provinces.js';
 import { PEERS, getPeerMetric } from '../data/peers.js';
+import { formatDate, RELEASES } from '../data/sources.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
-import { mountSeriesCharts, seriesCard, statTile } from './parts.js';
+import { bpsPopulationTile, mountSeriesCharts, releasesList, seriesCard, statTile } from './parts.js';
 
 const HEADLINES = ['population', 'gdp', 'gdp-growth', 'inflation', 'unemployment', 'poverty', 'life-expectancy', 'internet'];
 const SHORT_LABELS = { inflation: 'Inflation', poverty: 'Poverty rate', 'life-expectancy': 'Life expectancy' };
@@ -15,10 +16,14 @@ const SHORT_LABELS = { inflation: 'Inflation', poverty: 'Poverty rate', 'life-ex
 function topicCard(topic) {
   const lead = getIndicator(topic.tiles[0]);
   const { year, value } = latestOf(lead);
+  // The people card leads with BPS's count, like the population tile above it.
+  const figure = lead.id === 'population'
+    ? `<span class="stat">${formatNumber(NATIONAL.pop / 1e6, 1)} m</span> <span class="small muted">people, BPS mid-2025</span>`
+    : `<span class="stat">${formatValue(lead, value)}</span> <span class="small muted">${esc(lead.name.toLowerCase())}, ${year}</span>`;
   return `<a class="card topic-card" href="#/topic/${topic.id}">
     <h3>${esc(topic.title)}</h3>
     <p>${esc(topic.intro.split('. ')[0])}.</p>
-    <div class="card__foot"><span><span class="stat">${formatValue(lead, value)}</span> <span class="small muted">${esc(lead.name.toLowerCase())}, ${year}</span></span><span class="more">Explore</span></div>
+    <div class="card__foot"><span>${figure}</span><span class="more">Explore</span></div>
   </a>`;
 }
 
@@ -35,11 +40,11 @@ export function render() {
       <h1>Indonesia in <em>figures</em></h1>
       <p class="lead">People, economy, jobs, health, schooling, environment and all 38 provinces. Every figure shows its year and its source: BPS-Statistics Indonesia and the World Bank.</p>
       <ul class="hero__facts">
-        <li>Capital <b>Jakarta</b></li><li>Provinces <b>38</b></li><li>Land <b>1.89 million km²</b></li>
-        <li>Currency <b>Rupiah</b></li><li>Income group <b>Upper middle</b></li>
+        <li>Capital <b>Jakarta</b></li><li>Provinces <b>38</b></li><li>Land <b>${formatNumber(NATIONAL.area / 1e6, 2)} million km²</b></li><li>World Bank income group <b>upper middle</b></li>
       </ul>
       <div class="hero__note">
-        <p><b>Updated ${WDI_UPDATED}:</b> 2025 figures for GDP, prices, jobs and population; BPS mid-2025 estimates for every province. <a href="#/data">All ${INDICATORS.length} indicators</a> · <a href="#/about">Sources</a></p>
+        <p class="hero__note-head"><b>Latest releases</b><a href="#/data">All ${INDICATORS.length} indicators and releases</a></p>
+        <ul class="hero__releases">${RELEASES.slice(0, 3).map((r) => `<li><time datetime="${r.date}">${formatDate(r.date, { short: true })}</time><span class="tag">${esc(r.agency)}</span><span>${esc(r.short)}</span></li>`).join('')}</ul>
       </div>
     </div>
     <div class="card hero__map">
@@ -51,7 +56,7 @@ export function render() {
   </section>
 
   <section aria-label="Headline figures">
-    <div class="tiles">${HEADLINES.map((id) => statTile(id, { label: SHORT_LABELS[id] })).join('')}</div>
+    <div class="tiles">${HEADLINES.map((id) => (id === 'population' ? bpsPopulationTile() : statTile(id, { label: SHORT_LABELS[id] }))).join('')}</div>
   </section>
 
   <section class="section">
@@ -81,6 +86,11 @@ export function render() {
       <div id="home-peers"></div>
       <p class="source">Source: World Bank International Comparison Program, via WDI (NY.GDP.PCAP.PP.CD). <a href="#/compare/gdp-per-capita-ppp">Compare twelve measures</a></p>
     </article>
+  </section>
+
+  <section class="section" id="releases">
+    <div class="section__head"><h2>Latest releases</h2><a class="more" href="#/about">Sources and methods</a></div>
+    <div class="card">${releasesList()}</div>
   </section>`;
 
   return {

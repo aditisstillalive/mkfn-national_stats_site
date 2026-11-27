@@ -5,6 +5,7 @@ import { formatNumber } from '../lib/format.js';
 import { ISLAND_GROUPS, NATIONAL, PROVINCES, PROVINCE_SOURCE, groupName, groupTotals } from '../data/provinces.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
+import { twoNumbersNote } from './parts.js';
 
 export const MEASURES = [
   { id: 'pop', label: 'Population', unit: 'million people', format: (v) => `${formatNumber(v / 1e6, 2)} m` },
@@ -45,6 +46,7 @@ export function render(_params, query) {
     <p class="eyebrow">Regional statistics</p>
     <h1>The 38 provinces</h1>
     <p class="lead">${formatNumber(NATIONAL.pop / 1e6, 1)} million people in mid-2025, unevenly spread: Java holds ${formatNumber(javaShare, 1)}% of them on ${formatNumber(javaLand, 1)}% of the land. Jakarta has ${formatNumber(PROVINCES.find((p) => p.iso === 'jk').density, 0)} people per km²; South Papua has ${formatNumber(PROVINCES.find((p) => p.iso === 'ps').density, 0)}.</p>
+    ${twoNumbersNote('population', { compact: true })}
 
     <section class="section map-layout">
       <div class="card">

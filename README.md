@@ -30,6 +30,11 @@ An independent national statistics site for Indonesia, entered in the make.fun b
 - **38 provinces**: BPS mid-2025 population estimates and land area. They sum to 284,438,600 people, BPS's national
   mid-2025 total.
 - **Neighbour comparison**: the latest WDI value for each of six countries.
+- **One headline population**: the cover and province pages use BPS's 284.4 million (the province sum); the population
+  series and the comparison use the World Bank/UN 285.7 million. The population and density pages explain why the two
+  differ, and every headline card carries a source tag (BPS / World Bank) with its year.
+- **Latest releases**: a dated list of the publications behind the figures, on the overview and the data catalogue.
+- Every indicator page has a definition, a method note, its source and series code, and a CSV download.
 
 All data lives in `app/data/`; the site makes no network requests.
 
@@ -44,7 +49,7 @@ app/
   index.html  styles.css  main.js (masthead, theme)  router.js (hash routes, lazy pages)
   lib/      format.js (numbers)  dom.js (escaping, CSV, resize)
   charts/   line-chart.js  bar-chart.js  tile-map.js  sparkline.js  tooltip.js  scale.js
-  data/     indicators.js  topics.js  provinces.js  peers.js
+  data/     indicators.js  topics.js  provinces.js  peers.js  sources.js (source tags, methods, two-number notes, releases)
   views/    home.js  topic.js  indicator.js  regions.js  province.js  compare.js  catalogue.js  about.js  parts.js  not-found.js
 ```
 
