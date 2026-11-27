@@ -3,7 +3,8 @@
 import { esc } from '../lib/dom.js';
 import { formatChange, formatValue } from '../lib/format.js';
 import { changeOver, getIndicator, latestOf, pointsOf, WDI_UPDATED } from '../data/indicators.js';
-import { sparkline } from '../charts/sparkline.js';
+import { shareBar, sparkline } from '../charts/sparkline.js';
+import { ISLAND_GROUPS, NATIONAL, groupTotals } from '../data/provinces.js';
 import { lineChart } from '../charts/line-chart.js';
 import { EVENTS } from '../data/topics.js';
 import { formatDate, isDated, RELEASES, sourceTag, TWO_NUMBERS } from '../data/sources.js';
@@ -52,7 +53,7 @@ export function bpsPopulationTile() {
   return `<a class="tile" href="#/indicator/population">
     <span class="tile__label">Population</span>
     <span class="tile__value">${bps.value.toFixed(1)}<span class="tile__unit">m</span></span>
-    <span class="tile__meta">Sum of the 38 provinces</span>
+    <span class="tile__meta"><span class="delta delta--flat">Java ${(groupTotals('java').pop / NATIONAL.pop * 100).toFixed(1)}% of people</span>${shareBar(ISLAND_GROUPS.map((g) => ({ name: g.name, value: groupTotals(g.id).pop, highlight: g.id === 'java' })))}</span>
     <span class="tile__src">BPS · ${bps.date}</span>
   </a>`;
 }

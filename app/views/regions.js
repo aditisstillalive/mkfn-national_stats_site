@@ -3,39 +3,9 @@
 import { downloadText, esc, toCsv } from '../lib/dom.js';
 import { formatNumber } from '../lib/format.js';
 import { ISLAND_GROUPS, NATIONAL, PROVINCES, PROVINCE_SOURCE, groupName, groupTotals } from '../data/provinces.js';
-import { tileMap } from '../charts/tile-map.js';
+import { mapLegend, tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
 import { twoNumbersNote } from './stat-blocks.js';
-
-export const MEASURES = [
-  { id: 'pop', label: 'Population', unit: 'million people', format: (v) => `${formatNumber(v / 1e6, 2)} m` },
-  { id: 'density', label: 'Density', unit: 'people per km²', format: (v) => `${formatNumber(v, 0)} per km²` },
-  { id: 'area', label: 'Land area', unit: 'km²', format: (v) => `${formatNumber(v, 0)} km²` },
-];
-
-const COLUMNS = [
-  { key: 'name', label: 'Province', text: true },
-  { key: 'capital', label: 'Capital', text: true },
-  { key: 'group', label: 'Island group', text: true },
-  { key: 'pop', label: 'Population' },
-  { key: 'share', label: 'Share' },
-  { key: 'area', label: 'Land km²' },
-  { key: 'density', label: 'Per km²' },
-];
-
-function legend(breaks, measure) {
-  const edges = [0, ...breaks];
-  const ramp = edges.map((_, i) => `<i style="background:var(--seq-${i})"></i>`).join('');
-  return `<div class="legend"><span>${esc(measure.label)}:</span><span>${measure.format(Math.min(...PROVINCES.map((p) => p[measure.id])))}</span><span class="legend__ramp">${ramp}</span><span>${measure.format(Math.max(...PROVINCES.map((p) => p[measure.id])))}</span><span>· six equal-count groups</span></div>`;
-}
-
-function rowsHtml(list) {
-  const maxPop = Math.max(...PROVINCES.map((p) => p.pop));
-  return list.map((p) => `<tr>
-    <td><a href="#/region/${p.iso}">${esc(p.name)}</a></td><td>${esc(p.capital)}</td><td>${esc(groupName(p.group))}</td>
-    <td class="n"><span class="bar-cell" style="width:${(p.pop / maxPop) * 60}px"></span>${formatNumber(p.pop, 0)}</td>
-    <td class="n">${formatNumber((p.pop / NATIONAL.pop) * 100, 1)}%</td><td class="n">${formatNumber(p.area, 0)}</td><td class="n">${formatNumber(p.density, 0)}</td></tr>`).join('');
-}
 
 export function render(_params, query) {
   const measureId = MEASURES.some((m) => m.id === query.get('by')) ? query.get('by') : 'pop';
@@ -91,7 +61,7 @@ export function render(_params, query) {
         const measure = MEASURES.find((m) => m.id === state.measure);
         const host = root.querySelector('#prov-map');
         const breaks = tileMap(host, PROVINCES, { valueOf: (p) => p[measure.id], format: measure.format });
-        root.querySelector('#prov-legend').innerHTML = legend(breaks, measure);
+        root.querySelector('#prov-legend').innerHTML = mapLegend(PROVINCES.map((p) => p[measure.id]), measure);
         const groups = ISLAND_GROUPS.map((g) => groupTotals(g.id));
         const bars = root.querySelector('#group-bars');
         bars.replaceChildren();
@@ -146,3 +116,28 @@ export function render(_params, query) {
     },
   };
 }
+
+export const MEASURES = [
+  { id: 'pop', label: 'Population', unit: 'million people', format: (v) => `${formatNumber(v / 1e6, 2)} m` },
+  { id: 'density', label: 'Density', unit: 'people per km²', format: (v) => `${formatNumber(v, 0)} per km²` },
+  { id: 'area', label: 'Land area', unit: 'km²', format: (v) => `${formatNumber(v, 0)} km²` },
+];
+
+const COLUMNS = [
+  { key: 'name', label: 'Province', text: true },
+  { key: 'capital', label: 'Capital', text: true },
+  { key: 'group', label: 'Island group', text: true },
+  { key: 'pop', label: 'Population' },
+  { key: 'share', label: 'Share' },
+  { key: 'area', label: 'Land km²' },
+  { key: 'density', label: 'Per km²' },
+];
+
+function rowsHtml(list) {
+  const maxPop = Math.max(...PROVINCES.map((p) => p.pop));
+  return list.map((p) => `<tr>
+    <td><a href="#/region/${p.iso}">${esc(p.name)}</a></td><td>${esc(p.capital)}</td><td>${esc(groupName(p.group))}</td>
+    <td class="n"><span class="bar-cell" style="width:${(p.pop / maxPop) * 60}px"></span>${formatNumber(p.pop, 0)}</td>
+    <td class="n">${formatNumber((p.pop / NATIONAL.pop) * 100, 1)}%</td><td class="n">${formatNumber(p.area, 0)}</td><td class="n">${formatNumber(p.density, 0)}</td></tr>`).join('');
+}
+

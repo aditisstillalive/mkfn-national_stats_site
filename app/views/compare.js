@@ -8,24 +8,6 @@ import { TWO_NUMBERS } from '../data/sources.js';
 import { barChart } from '../charts/bar-chart.js';
 import { twoNumbersNote, WDI_URL } from './stat-blocks.js';
 
-const show = (m, v) => `${m.prefix ?? ''}${formatNumber(v, m.dp)}${m.suffix ?? ''}`;
-
-function rankSentence(m) {
-  const order = PEERS.map((c, i) => ({ c, v: m.values[i] })).sort((a, b) => b.v - a.v);
-  const place = order.findIndex((o) => o.c.iso === 'IDN') + 1;
-  const words = ['', 'highest', 'second highest', 'third highest', 'third lowest', 'second lowest', 'lowest'];
-  const other = place === 1
-    ? `next is ${order[1].c.name} at ${show(m, order[1].v)}`
-    : `${order[0].c.name} is highest at ${show(m, order[0].v)}`;
-  return `Indonesia has the ${words[place]} value of the six, at ${show(m, m.values[0])} in ${m.year}; ${other}.`;
-}
-
-function fullTable() {
-  const head = PEERS.map((c) => `<th class="n">${esc(c.name)}</th>`).join('');
-  const rows = PEER_METRICS.map((m) => `<tr><td><a href="#/compare/${m.id}">${esc(m.name)}</a> <span class="muted small">${esc(m.unit)}, ${m.year}</span></td>${m.values.map((v, i) => `<td class="n${i === 0 ? ' self' : ''}">${i === 0 ? '<b>' : ''}${show(m, v)}${i === 0 ? '</b>' : ''}</td>`).join('')}</tr>`).join('');
-  return `<div class="table-wrap"><table><thead><tr><th>Measure</th>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
-}
-
 export function render([id]) {
   const metric = getPeerMetric(id ?? 'gdp-per-capita-ppp');
   if (!metric) return null;
@@ -67,3 +49,22 @@ export function render([id]) {
     },
   };
 }
+
+const show = (m, v) => `${m.prefix ?? ''}${formatNumber(v, m.dp)}${m.suffix ?? ''}`;
+
+function rankSentence(m) {
+  const order = PEERS.map((c, i) => ({ c, v: m.values[i] })).sort((a, b) => b.v - a.v);
+  const place = order.findIndex((o) => o.c.iso === 'IDN') + 1;
+  const words = ['', 'highest', 'second highest', 'third highest', 'third lowest', 'second lowest', 'lowest'];
+  const other = place === 1
+    ? `next is ${order[1].c.name} at ${show(m, order[1].v)}`
+    : `${order[0].c.name} is highest at ${show(m, order[0].v)}`;
+  return `Indonesia has the ${words[place]} value of the six, at ${show(m, m.values[0])} in ${m.year}; ${other}.`;
+}
+
+function fullTable() {
+  const head = PEERS.map((c) => `<th class="n">${esc(c.name)}</th>`).join('');
+  const rows = PEER_METRICS.map((m) => `<tr><td><a href="#/compare/${m.id}">${esc(m.name)}</a> <span class="muted small">${esc(m.unit)}, ${m.year}</span></td>${m.values.map((v, i) => `<td class="n${i === 0 ? ' self' : ''}">${i === 0 ? '<b>' : ''}${show(m, v)}${i === 0 ? '</b>' : ''}</td>`).join('')}</tr>`).join('');
+  return `<div class="table-wrap"><table><thead><tr><th>Measure</th>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+

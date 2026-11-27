@@ -6,15 +6,6 @@ import { INDICATORS, latestOf, WDI_UPDATED } from '../data/indicators.js';
 import { TOPICS, getTopic } from '../data/topics.js';
 import { changeBadge, releasesList } from './stat-blocks.js';
 
-function row(d) {
-  const { year, value } = latestOf(d);
-  return `<tr data-topic="${d.topic}" data-text="${esc(`${d.name} ${d.unit} ${d.code} ${d.origin}`.toLowerCase())}">
-    <td><a href="#/indicator/${d.id}">${esc(d.name)}</a><div class="small muted">${esc(d.unit)}</div></td>
-    <td>${esc(getTopic(d.topic).name)}</td>
-    <td class="n"><b>${formatValue(d, value)}</b></td><td class="n">${year}</td><td>${changeBadge(d)}</td>
-    <td class="small">${esc(d.origin)}<div class="muted">${d.code}</div></td></tr>`;
-}
-
 export function render() {
   const html = `
     <p class="crumbs"><a href="#/">Overview</a> / Data catalogue</p>
@@ -65,3 +56,13 @@ export function render() {
     },
   };
 }
+
+function row(d) {
+  const { year, value } = latestOf(d);
+  return `<tr data-topic="${d.topic}" data-text="${esc(`${d.name} ${d.unit} ${d.code} ${d.origin}`.toLowerCase())}">
+    <td><a href="#/indicator/${d.id}">${esc(d.name)}</a><div class="small muted">${esc(d.unit)}</div></td>
+    <td>${esc(getTopic(d.topic).name)}</td>
+    <td class="n"><b>${formatValue(d, value)}</b></td><td class="n">${year}</td><td>${changeBadge(d)}</td>
+    <td class="small">${esc(d.origin)}<div class="muted">${d.code}</div></td></tr>`;
+}
+

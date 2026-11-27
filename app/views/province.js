@@ -7,12 +7,6 @@ import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
 import { twoNumbersNote } from './stat-blocks.js';
 
-function neighbours(p) {
-  const sorted = [...PROVINCES].sort((a, b) => b.pop - a.pop);
-  const i = sorted.indexOf(p);
-  return { bigger: sorted[i - 1] ?? null, smaller: sorted[i + 1] ?? null };
-}
-
 export function render([iso]) {
   const p = getProvince(iso);
   if (!p) return null;
@@ -64,3 +58,10 @@ export function render([iso]) {
     },
   };
 }
+
+function neighbours(p) {
+  const sorted = [...PROVINCES].sort((a, b) => b.pop - a.pop);
+  const i = sorted.indexOf(p);
+  return { bigger: sorted[i - 1] ?? null, smaller: sorted[i + 1] ?? null };
+}
+

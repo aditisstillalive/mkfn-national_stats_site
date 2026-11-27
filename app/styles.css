@@ -6,7 +6,7 @@
   --sunk: #f3eee4;
   --ink: #17213a;
   --ink-2: #4a5468;
-  --ink-3: #6b7385;
+  --ink-3: #5c6375;
   --rule: #e4ddcf;
   --navy: #14213d;
   --navy-2: #1e2d52;
@@ -158,6 +158,8 @@ a.tile:hover { border-color: var(--s1); color: inherit; transform: translateY(-1
 .tile__spark { width: 72px; height: 28px; position: absolute; top: 14px; right: 14px; }
 .tile__spark path { fill: none; stroke: var(--s1); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
 .tile__spark circle { fill: var(--s1); }
+.tile__share rect { fill: var(--seq-2); }
+.tile__share rect.is-hl { fill: var(--s1); }
 .delta { font-size: .8rem; font-weight: 600; white-space: nowrap; }
 .delta--up { color: var(--up); }
 .delta--down { color: var(--down); }
@@ -302,3 +304,5 @@ dl.meta dd { margin: 0; }
 .footer__inner p { margin: 0 0 6px; }
 .footer__inner p:last-child { margin: 0; }
 @media (max-width: 600px) { .footer__inner { padding: 18px 16px 26px; } }
+.map-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 12px; margin-top: 4px; }
+.map-foot .legend, .map-foot .source { margin: 0; font-size: .74rem; }

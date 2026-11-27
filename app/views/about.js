@@ -3,18 +3,6 @@ import { esc } from '../lib/dom.js';
 import { INDICATORS, WDI_UPDATED } from '../data/indicators.js';
 import { NATIONAL, PROVINCE_SOURCE } from '../data/provinces.js';
 
-const AGENCIES = [
-  { name: 'BPS-Statistics Indonesia (Badan Pusat Statistik)', url: 'https://www.bps.go.id/en', role: 'The national statistics office. Runs the census, the labour force survey (Sakernas), the socio-economic survey (Susenas), the consumer price index and the national accounts that most international series start from. Source of the provincial population estimates.' },
-  { name: 'World Bank, World Development Indicators', url: 'https://datacatalog.worldbank.org/search/dataset/0037712/World-Development-Indicators', role: `Compiles comparable national series from the agencies below. Every national time series on this site was read from WDI's update of ${WDI_UPDATED}.` },
-  { name: 'United Nations Population Division', url: 'https://population.un.org/wpp/', role: 'World Population Prospects 2024: population, age structure, fertility and life expectancy.' },
-  { name: 'International Labour Organization (ILOSTAT)', url: 'https://ilostat.ilo.org/', role: 'Modelled unemployment, labour force participation and employment by sector, built from Sakernas.' },
-  { name: 'International Monetary Fund', url: 'https://data.imf.org/', role: 'Consumer price inflation, exchange rates and the balance of payments.' },
-  { name: 'UNESCO Institute for Statistics', url: 'https://uis.unesco.org/', role: 'School enrolment and adult literacy.' },
-  { name: 'WHO and UNICEF', url: 'https://washdata.org/', role: 'Health spending, maternal and child mortality, stunting, drinking water and sanitation.' },
-  { name: 'FAO, EDGAR (EU Joint Research Centre), IEA and IRENA', url: 'https://edgar.jrc.ec.europa.eu/', role: 'Forest cover, CO₂ emissions and renewable energy.' },
-  { name: 'International Telecommunication Union', url: 'https://www.itu.int/en/ITU-D/Statistics/', role: 'Internet use and mobile subscriptions.' },
-];
-
 export function render() {
   const html = `
     <p class="crumbs"><a href="#/">Overview</a> / Sources and methods</p>
@@ -59,3 +47,16 @@ export function render() {
     </section>`;
   return { title: 'Sources and methods', html };
 }
+
+const AGENCIES = [
+  { name: 'BPS-Statistics Indonesia (Badan Pusat Statistik)', url: 'https://www.bps.go.id/en', role: 'The national statistics office. Runs the census, the labour force survey (Sakernas), the socio-economic survey (Susenas), the consumer price index and the national accounts that most international series start from. Source of the provincial population estimates.' },
+  { name: 'World Bank, World Development Indicators', url: 'https://datacatalog.worldbank.org/search/dataset/0037712/World-Development-Indicators', role: `Compiles comparable national series from the agencies below. Every national time series on this site was read from WDI's update of ${WDI_UPDATED}.` },
+  { name: 'United Nations Population Division', url: 'https://population.un.org/wpp/', role: 'World Population Prospects 2024: population, age structure, fertility and life expectancy.' },
+  { name: 'International Labour Organization (ILOSTAT)', url: 'https://ilostat.ilo.org/', role: 'Modelled unemployment, labour force participation and employment by sector, built from Sakernas.' },
+  { name: 'International Monetary Fund', url: 'https://data.imf.org/', role: 'Consumer price inflation, exchange rates and the balance of payments.' },
+  { name: 'UNESCO Institute for Statistics', url: 'https://uis.unesco.org/', role: 'School enrolment and adult literacy.' },
+  { name: 'WHO and UNICEF', url: 'https://washdata.org/', role: 'Health spending, maternal and child mortality, stunting, drinking water and sanitation.' },
+  { name: 'FAO, EDGAR (EU Joint Research Centre), IEA and IRENA', url: 'https://edgar.jrc.ec.europa.eu/', role: 'Forest cover, CO₂ emissions and renewable energy.' },
+  { name: 'International Telecommunication Union', url: 'https://www.itu.int/en/ITU-D/Statistics/', role: 'Internet use and mobile subscriptions.' },
+];
+

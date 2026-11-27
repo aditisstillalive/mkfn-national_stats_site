@@ -7,7 +7,7 @@ import { getIndicator, latestOf } from './indicators.js';
 const wdi = (id) => latestOf(getIndicator(id));
 
 /** Series whose latest published year is this old or older are flagged as dated wherever they are shown. */
-export const DATED_UP_TO = 2021;
+export const DATED_UP_TO = 2023;
 export const isDated = (year) => year <= DATED_UP_TO;
 
 /** Short label for the source tag on headline cards: the agency whose number is shown. */

@@ -27,15 +27,6 @@ export function formatChange(delta, dp = 1, unit = '') {
   return `${sign}${formatNumber(Math.abs(delta), dp)}${unit}`;
 }
 
-/** Large counts in words: 285.7 million, 1.4 trillion. */
-export function formatLarge(value) {
-  const abs = Math.abs(value);
-  if (abs >= 1e12) return `${formatNumber(value / 1e12, 2)} trillion`;
-  if (abs >= 1e9) return `${formatNumber(value / 1e9, 1)} billion`;
-  if (abs >= 1e6) return `${formatNumber(value / 1e6, 1)} million`;
-  return formatNumber(value, 0);
-}
-
 export function ordinal(n) {
   const s = ['th', 'st', 'nd', 'rd'];
   const v = n % 100;

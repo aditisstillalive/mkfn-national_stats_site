@@ -11,6 +11,12 @@ const SEAS = [
   { col: 11.6, row: 0.35, text: 'Pacific Ocean' },
 ];
 
+/** Legend for a tile map: the lowest value, the six shades, the highest value. */
+export function mapLegend(values, { label, format, note = true }) {
+  const ramp = Array.from({ length: STEPS }, (_, i) => `<i style="background:var(--seq-${i})"></i>`).join('');
+  return `<div class="legend"><span>${esc(label)}:</span><span>${esc(format(Math.min(...values)))}</span><span class="legend__ramp">${ramp}</span><span>${esc(format(Math.max(...values)))}</span>${note ? '<span>· six equal-count groups</span>' : ''}</div>`;
+}
+
 /** Class breaks at quantiles, so each shade holds about the same number of provinces. */
 export function quantileBreaks(values, steps = STEPS) {
   const sorted = [...values].sort((a, b) => a - b);

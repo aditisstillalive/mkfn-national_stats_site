@@ -9,14 +9,6 @@ export function esc(value) {
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
-/** Creates an SVG element with attributes; text, if given, becomes its content. */
-export function svgEl(name, attrs = {}, text) {
-  const node = document.createElementNS(SVG_NS, name);
-  for (const [key, value] of Object.entries(attrs)) if (value != null) node.setAttribute(key, value);
-  if (text != null) node.textContent = text;
-  return node;
-}
-
 /** Offers text to the visitor as a downloaded file (used for CSV exports). */
 export function downloadText(filename, text, type = 'text/csv') {
   const url = URL.createObjectURL(new Blob([text], { type: `${type};charset=utf-8` }));

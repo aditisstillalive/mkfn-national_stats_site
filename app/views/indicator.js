@@ -9,21 +9,6 @@ import { lineChart } from '../charts/line-chart.js';
 import { isDated, methodOf } from '../data/sources.js';
 import { changeBadge, sourceBadge, twoNumbersNote, WDI_URL } from './stat-blocks.js';
 
-const RANGES = [
-  { id: 'all', label: 'All years', from: -Infinity },
-  { id: '2000', label: 'Since 2000', from: 2000 },
-  { id: '10y', label: 'Last 10 years', from: null },
-];
-
-function valueTable(d) {
-  const points = pointsOf(d).reverse();
-  return points.map(([year, value], i) => {
-    const prev = points[i + 1];
-    const step = prev ? value - prev[1] : null;
-    return `<tr><td class="n">${year}</td><td class="n">${formatValue(d, value)}</td><td class="n muted">${step == null ? '' : (step > 0 ? '+' : step < 0 ? '−' : '') + formatNumber(Math.abs(step), d.dp)}</td></tr>`;
-  }).join('');
-}
-
 export function render([id], query) {
   const d = getIndicator(id);
   if (!d) return null;
@@ -116,3 +101,19 @@ export function render([id], query) {
     },
   };
 }
+
+const RANGES = [
+  { id: 'all', label: 'All years', from: -Infinity },
+  { id: '2000', label: 'Since 2000', from: 2000 },
+  { id: '10y', label: 'Last 10 years', from: null },
+];
+
+function valueTable(d) {
+  const points = pointsOf(d).reverse();
+  return points.map(([year, value], i) => {
+    const prev = points[i + 1];
+    const step = prev ? value - prev[1] : null;
+    return `<tr><td class="n">${year}</td><td class="n">${formatValue(d, value)}</td><td class="n muted">${step == null ? '' : (step > 0 ? '+' : step < 0 ? '−' : '') + formatNumber(Math.abs(step), d.dp)}</td></tr>`;
+  }).join('');
+}
+

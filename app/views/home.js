@@ -1,36 +1,14 @@
 // Overview page: the headline figures, the long view, a door into each topic, the provinces and the neighbours.
 import { esc } from '../lib/dom.js';
 import { formatNumber, formatValue } from '../lib/format.js';
-import { INDICATORS, getIndicator, latestOf, WDI_UPDATED } from '../data/indicators.js';
+import { INDICATORS, getIndicator, latestOf } from '../data/indicators.js';
 import { TOPICS } from '../data/topics.js';
 import { NATIONAL, PROVINCES, PROVINCE_SOURCE } from '../data/provinces.js';
 import { PEERS, getPeerMetric } from '../data/peers.js';
 import { formatDate, RELEASES } from '../data/sources.js';
-import { tileMap } from '../charts/tile-map.js';
+import { mapLegend, tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
 import { bpsPopulationTile, mountSeriesCharts, releasesList, seriesCard, statTile } from './stat-blocks.js';
-
-const HEADLINES = ['population', 'gdp', 'gdp-growth', 'inflation', 'unemployment', 'poverty', 'life-expectancy', 'internet'];
-const SHORT_LABELS = { inflation: 'Inflation', poverty: 'Poverty rate', 'life-expectancy': 'Life expectancy' };
-
-function topicCard(topic) {
-  const lead = getIndicator(topic.tiles[0]);
-  const { year, value } = latestOf(lead);
-  // The people card leads with BPS's count, like the population tile above it.
-  const figure = lead.id === 'population'
-    ? `<span class="stat">${formatNumber(NATIONAL.pop / 1e6, 1)} m</span> <span class="small muted">people, BPS mid-2025</span>`
-    : `<span class="stat">${formatValue(lead, value)}</span> <span class="small muted">${esc(lead.name.toLowerCase())}, ${year}</span>`;
-  return `<a class="card topic-card" href="#/topic/${topic.id}">
-    <h3>${esc(topic.title)}</h3>
-    <p>${esc(topic.intro.split('. ')[0])}.</p>
-    <div class="card__foot"><span>${figure}</span><span class="more">Explore</span></div>
-  </a>`;
-}
-
-function topProvinces() {
-  const top = [...PROVINCES].sort((a, b) => b.pop - a.pop).slice(0, 5);
-  return `<ol class="rank-list">${top.map((p) => `<li><a href="#/region/${p.iso}">${esc(p.name)}</a><span class="num">${formatNumber(p.pop / 1e6, 1)} m</span></li>`).join('')}</ol>`;
-}
 
 export function render() {
   const html = `
@@ -44,14 +22,14 @@ export function render() {
       </ul>
       <div class="hero__note">
         <p class="hero__note-head"><b>Latest releases</b><a href="#/data">All ${INDICATORS.length} indicators and releases</a></p>
-        <ul class="hero__releases">${RELEASES.slice(0, 3).map((r) => `<li><time datetime="${r.date}">${formatDate(r.date, { short: true })}</time><span class="tag">${esc(r.agency)}</span><span>${esc(r.short)}</span></li>`).join('')}</ul>
+        <ul class="hero__releases">${RELEASES.slice(0, 3).map((r) => `<li><time datetime="${r.date}">${formatDate(r.date, { short: true })}</time><span class="tag">${esc(r.agency)}</span><a href="${r.href}">${esc(r.short)}</a></li>`).join('')}</ul>
       </div>
     </div>
     <div class="card hero__map">
       <div class="card__foot"><h3>Where ${formatNumber(NATIONAL.pop / 1e6, 1)} million Indonesians live</h3><a class="more" href="#/regions">Provinces</a></div>
       <p class="card__sub">Population by province, mid-2025 · darker = more people · select a province</p>
       <div id="home-map"></div>
-      <p class="source">Source: BPS-Statistics Indonesia, mid-2025 estimates.</p>
+      <div class="map-foot">${mapLegend(PROVINCES.map((p) => p.pop), { label: 'People', format: (v) => `${formatNumber(v / 1e6, 1)} m`, note: false })}<p class="source">Source: BPS-Statistics Indonesia, mid-2025</p></div>
     </div>
   </section>
 
@@ -105,3 +83,26 @@ export function render() {
     },
   };
 }
+
+const HEADLINES = ['population', 'gdp', 'gdp-growth', 'inflation', 'unemployment', 'poverty', 'life-expectancy', 'internet'];
+const SHORT_LABELS = { inflation: 'Inflation', poverty: 'Poverty rate', 'life-expectancy': 'Life expectancy' };
+
+function topicCard(topic) {
+  const lead = getIndicator(topic.tiles[0]);
+  const { year, value } = latestOf(lead);
+  // The people card leads with BPS's count, like the population tile above it.
+  const figure = lead.id === 'population'
+    ? `<span class="stat">${formatNumber(NATIONAL.pop / 1e6, 1)} m</span> <span class="small muted">people, BPS mid-2025</span>`
+    : `<span class="stat">${formatValue(lead, value)}</span> <span class="small muted">${esc(lead.name.toLowerCase())}, ${year}</span>`;
+  return `<a class="card topic-card" href="#/topic/${topic.id}">
+    <h3>${esc(topic.title)}</h3>
+    <p>${esc(topic.intro.split('. ')[0])}.</p>
+    <div class="card__foot"><span>${figure}</span><span class="more">Explore</span></div>
+  </a>`;
+}
+
+function topProvinces() {
+  const top = [...PROVINCES].sort((a, b) => b.pop - a.pop).slice(0, 5);
+  return `<ol class="rank-list">${top.map((p) => `<li><a href="#/region/${p.iso}">${esc(p.name)}</a><span class="num">${formatNumber(p.pop / 1e6, 1)} m</span></li>`).join('')}</ol>`;
+}
+
