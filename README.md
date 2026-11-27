@@ -50,7 +50,7 @@ app/
   lib/      format.js (numbers)  dom.js (escaping, CSV, resize)
   charts/   line-chart.js  bar-chart.js  tile-map.js  sparkline.js  tooltip.js  scale.js
   data/     indicators.js  topics.js  provinces.js  peers.js  sources.js (source tags, methods, two-number notes, releases)
-  views/    home.js  topic.js  indicator.js  regions.js  province.js  compare.js  catalogue.js  about.js  parts.js  not-found.js
+  views/    home.js  topic.js  indicator.js  regions.js  province.js  compare.js  catalogue.js  about.js  stat-blocks.js  not-found.js
 ```
 
 ## Run it

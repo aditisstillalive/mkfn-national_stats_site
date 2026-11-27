@@ -4,7 +4,7 @@ import { formatValue } from '../lib/format.js';
 import { indicatorsInTopic, latestOf } from '../data/indicators.js';
 import { TOPICS, getTopic } from '../data/topics.js';
 import { TWO_NUMBERS } from '../data/sources.js';
-import { changeBadge, mountSeriesCharts, seriesCard, statTile, twoNumbersNote } from './parts.js';
+import { changeBadge, mountSeriesCharts, seriesCard, statTile, twoNumbersNote } from './stat-blocks.js';
 
 function indicatorTable(topicId) {
   const rows = indicatorsInTopic(topicId).map((d) => {

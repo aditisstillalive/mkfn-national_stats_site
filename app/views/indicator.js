@@ -6,8 +6,8 @@ import { getIndicator, indicatorsInTopic, latestOf, pointsOf, WDI_UPDATED } from
 import { EVENTS, getTopic } from '../data/topics.js';
 import { getPeerMetric } from '../data/peers.js';
 import { lineChart } from '../charts/line-chart.js';
-import { methodOf, sourceTag } from '../data/sources.js';
-import { changeBadge, twoNumbersNote, WDI_URL } from './parts.js';
+import { isDated, methodOf } from '../data/sources.js';
+import { changeBadge, sourceBadge, twoNumbersNote, WDI_URL } from './stat-blocks.js';
 
 const RANGES = [
   { id: 'all', label: 'All years', from: -Infinity },
@@ -45,12 +45,13 @@ export function render([id], query) {
       <div class="ind-head__value">
         <div class="big">${formatValue(d, value)}</div>
         <div class="muted small">${esc(d.unit)} · ${year}</div>
-        <div class="tile__src">${esc(sourceTag(d))} · ${year}</div>
+        <div>${sourceBadge(d, year)}</div>
         <div>${changeBadge(d)}</div>
       </div>
     </div>
 
     ${twoNumbersNote(d.id)}
+    ${isDated(year) ? `<p class="note"><b>Dated series.</b> The latest figure the compiling agency has published is for ${year}; this page will show newer years when ${esc(d.origin.split(',')[0])} releases them.</p>` : ''}
 
     <section class="section card">
       <div class="controls">

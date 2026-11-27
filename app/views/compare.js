@@ -6,7 +6,7 @@ import { PEERS, PEER_METRICS, getPeerMetric } from '../data/peers.js';
 import { getIndicator, pointsOf, WDI_UPDATED } from '../data/indicators.js';
 import { TWO_NUMBERS } from '../data/sources.js';
 import { barChart } from '../charts/bar-chart.js';
-import { twoNumbersNote, WDI_URL } from './parts.js';
+import { twoNumbersNote, WDI_URL } from './stat-blocks.js';
 
 const show = (m, v) => `${m.prefix ?? ''}${formatNumber(v, m.dp)}${m.suffix ?? ''}`;
 

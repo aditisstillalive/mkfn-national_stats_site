@@ -1,6 +1,6 @@
 [
   { "file": "1-overview.jpg", "path": "#/", "viewport": { "width": 1280, "height": 800 } },
   { "file": "2-indicator-poverty.jpg", "path": "#/indicator/poverty", "viewport": { "width": 1280, "height": 800 }, "hover": "#ind-chart svg", "hoverX": 0.62 },
-  { "file": "3-compare-population.jpg", "path": "#/compare/population", "viewport": { "width": 1280, "height": 800 } },
+  { "file": "3-compare-gdp-ppp.jpg", "path": "#/compare/gdp-per-capita-ppp", "viewport": { "width": 1280, "height": 800 } },
   { "file": "4-health-phone.jpg", "path": "#/topic/health", "viewport": { "width": 390, "height": 844 }, "scale": 1.5 }
 ]

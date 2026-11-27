@@ -5,7 +5,7 @@ import { formatNumber, ordinal } from '../lib/format.js';
 import { NATIONAL, PROVINCES, PROVINCE_SOURCE, getProvince, groupName, groupTotals, rankOf } from '../data/provinces.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
-import { twoNumbersNote } from './parts.js';
+import { twoNumbersNote } from './stat-blocks.js';
 
 function neighbours(p) {
   const sorted = [...PROVINCES].sort((a, b) => b.pop - a.pop);

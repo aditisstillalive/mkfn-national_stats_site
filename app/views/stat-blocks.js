@@ -1,11 +1,12 @@
-// Building blocks the pages share: headline tiles, change badges, source lines and chart cards.
+// Stat blocks every page shares: headline tiles with source badges, change badges, source lines, chart cards, the
+// "why two numbers" note and the releases list.
 import { esc } from '../lib/dom.js';
 import { formatChange, formatValue } from '../lib/format.js';
 import { changeOver, getIndicator, latestOf, pointsOf, WDI_UPDATED } from '../data/indicators.js';
 import { sparkline } from '../charts/sparkline.js';
 import { lineChart } from '../charts/line-chart.js';
 import { EVENTS } from '../data/topics.js';
-import { formatDate, RELEASES, sourceTag, TWO_NUMBERS } from '../data/sources.js';
+import { formatDate, isDated, RELEASES, sourceTag, TWO_NUMBERS } from '../data/sources.js';
 
 export const WDI_URL = 'https://data.worldbank.org/indicator/';
 
@@ -34,8 +35,15 @@ export function statTile(id, { label } = {}) {
     <span class="tile__label">${esc(label ?? d.name)}</span>
     <span class="tile__value">${esc(prefix)}${formatValue(d, value, { withUnit: false })}<span class="tile__unit">${esc(suffix.trim() || shortUnit(d))}</span></span>
     <span class="tile__meta">${changeBadge(d)}${sparkline(pointsOf(d, 2000))}</span>
-    <span class="tile__src">${esc(sourceTag(d))} · ${year}</span>
+    ${sourceBadge(d, year)}
   </a>`;
+}
+
+/** "World Bank · 2025": who publishes the figure and its year, marked when the latest year is dated. */
+export function sourceBadge(d, year) {
+  return isDated(year)
+    ? `<span class="tile__src tile__src--old" title="No newer figure has been published">${esc(sourceTag(d))} · ${year}, latest</span>`
+    : `<span class="tile__src">${esc(sourceTag(d))} · ${year}</span>`;
 }
 
 /** The national population as BPS counts it: the sum of the 38 provinces, so the cover and the map agree. */

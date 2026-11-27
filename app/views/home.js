@@ -8,7 +8,7 @@ import { PEERS, getPeerMetric } from '../data/peers.js';
 import { formatDate, RELEASES } from '../data/sources.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
-import { bpsPopulationTile, mountSeriesCharts, releasesList, seriesCard, statTile } from './parts.js';
+import { bpsPopulationTile, mountSeriesCharts, releasesList, seriesCard, statTile } from './stat-blocks.js';
 
 const HEADLINES = ['population', 'gdp', 'gdp-growth', 'inflation', 'unemployment', 'poverty', 'life-expectancy', 'internet'];
 const SHORT_LABELS = { inflation: 'Inflation', poverty: 'Poverty rate', 'life-expectancy': 'Life expectancy' };

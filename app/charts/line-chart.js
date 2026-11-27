@@ -43,7 +43,7 @@ export function lineChart(container, series, options = {}) {
 
     const parts = [];
     for (const band of options.events ?? []) {
-      if (band.to < first || band.from > last) continue;
+      if (band.to <= first || band.from >= last) continue; // a band must overlap the plotted years to be drawn
       const bx = x(Math.max(band.from, first));
       const bw = Math.max(4, x(Math.min(band.to, last)) - bx);
       parts.push(`<g class="band"><rect x="${bx}" y="${m.t}" width="${bw}" height="${height - m.t - m.b}"/>` +

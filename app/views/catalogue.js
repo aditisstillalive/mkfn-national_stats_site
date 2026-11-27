@@ -4,7 +4,7 @@ import { esc } from '../lib/dom.js';
 import { formatValue } from '../lib/format.js';
 import { INDICATORS, latestOf, WDI_UPDATED } from '../data/indicators.js';
 import { TOPICS, getTopic } from '../data/topics.js';
-import { changeBadge, releasesList } from './parts.js';
+import { changeBadge, releasesList } from './stat-blocks.js';
 
 function row(d) {
   const { year, value } = latestOf(d);

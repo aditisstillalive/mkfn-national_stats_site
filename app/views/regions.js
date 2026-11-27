@@ -5,7 +5,7 @@ import { formatNumber } from '../lib/format.js';
 import { ISLAND_GROUPS, NATIONAL, PROVINCES, PROVINCE_SOURCE, groupName, groupTotals } from '../data/provinces.js';
 import { tileMap } from '../charts/tile-map.js';
 import { barChart } from '../charts/bar-chart.js';
-import { twoNumbersNote } from './parts.js';
+import { twoNumbersNote } from './stat-blocks.js';
 
 export const MEASURES = [
   { id: 'pop', label: 'Population', unit: 'million people', format: (v) => `${formatNumber(v / 1e6, 2)} m` },
