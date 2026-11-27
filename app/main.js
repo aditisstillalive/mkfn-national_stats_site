@@ -47,12 +47,22 @@ function markActiveLink(path) {
   const section = path.split('/').slice(0, 2).join('/');
   for (const link of document.querySelectorAll('.site-nav a')) {
     const target = link.getAttribute('href').slice(1);
-    const hit = target === '/' ? path === '/' : (section === target || path.startsWith(target + '/') ||
+    const hit = target === '/' ? path === '/' : (path === target || section === target || path.startsWith(target + '/') ||
       (target === '/regions' && path.startsWith('/region/')) || (target === '/data' && path.startsWith('/indicator/')));
     if (hit) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
   }
 }
 
+/** The skip link moves focus to the page content; following its #main href would be read as a route. */
+function setupSkipLink() {
+  const skip = document.querySelector('.skip');
+  skip?.addEventListener('click', (event) => {
+    event.preventDefault();
+    document.getElementById('main').focus();
+  });
+}
+
 setupThemeToggle();
+setupSkipLink();
 const closeMenu = setupMenu();
 startRouter(document.getElementById('main'), (path) => { closeMenu(); markActiveLink(path); });

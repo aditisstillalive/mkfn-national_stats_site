@@ -15,7 +15,7 @@ export function sourceTag(indicator) {
 const METHODS = [
   [/^UN World Population Prospects/, 'Modelled by the UN Population Division from Indonesia\'s censuses, surveys and BPS estimates, reconciled across years so that births, deaths and migration add up. In the 2024 revision, estimates run to 2023 and later years are projections.'],
   [/^UN World Urbanization/, 'Urban share follows BPS\'s own definition of urban villages (desa/kelurahan), which looks at density, farm households and services; the UN fills the years between censuses.'],
-  [/derived from UN World Population/, 'Computed by the World Bank as mid-year population (UN WPP) divided by land area (FAO), so it moves with both; a land-area revision gives the step in 2000.'],
+  [/derived from UN World Population/, 'Annual exponential rate of change of the mid-year population, computed by the World Bank from UN World Population Prospects 2024 totals; values from 2024 on rest on the UN projection.'],
   [/^FAO land area/, 'Mid-year population (UN WPP) divided by land area (FAO). A land-area revision gives the step in 2000.'],
   [/national accounts, from BPS/, 'BPS compiles GDP from the production and expenditure sides each quarter (2010 base year). The World Bank converts rupiah values to US dollars at the annual average official exchange rate, so dollar figures move with the rupiah.'],
   [/International Comparison Program/, 'GDP converted with purchasing power parities from the World Bank\'s International Comparison Program, which prices the same basket of goods in every country, then extrapolated from the benchmark year with national growth and prices.'],
@@ -49,11 +49,13 @@ export function methodOf(indicator) {
  */
 export const TWO_NUMBERS = {
   population: {
+    label: 'the population',
     bps: { value: NATIONAL.pop / 1e6, text: `${(NATIONAL.pop / 1e6).toFixed(1)} million`, date: 'mid-2025' },
     wdi: { text: `${wdi('population').value.toFixed(1)} million`, date: `mid-${wdi('population').year}` },
     why: 'BPS projects each province forward from the 2020 Population Census; the 38 provinces on this site add up to its national total. The World Bank publishes the UN World Population Prospects 2024 figure, which the UN models from the same censuses but with its own assumptions on births, deaths and migration, so every country is estimated alike. The two differ by about 1.3 million people (0.5%). This site shows BPS on the cover and for provinces, and the UN figure for the long series and the comparison with neighbours.',
   },
   density: {
+    label: 'population density',
     bps: { value: NATIONAL.pop / NATIONAL.area, text: `${Math.round(NATIONAL.pop / NATIONAL.area)} people per km²`, date: 'mid-2025' },
     wdi: { text: `${Math.round(wdi('density').value)} people per km²`, date: String(wdi('density').year) },
     why: 'The province pages divide BPS\'s mid-2025 population by BPS land area (1.89 million km²). This series divides the UN population by FAO land area and runs to 2024. The difference is under one person per km².',

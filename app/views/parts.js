@@ -62,7 +62,7 @@ export function twoNumbersNote(id, { compact = false } = {}) {
   const n = TWO_NUMBERS[id];
   if (!n) return '';
   if (compact) {
-    return `<p class="note small">BPS puts this at <b>${esc(n.bps.text)}</b> (${n.bps.date}); the World Bank at <b>${esc(n.wdi.text)}</b> (${n.wdi.date}). <a href="#/indicator/${id}">Why two numbers</a></p>`;
+    return `<p class="note small">BPS puts ${esc(n.label)} at <b>${esc(n.bps.text)}</b> (${n.bps.date}); the World Bank at <b>${esc(n.wdi.text)}</b> (${n.wdi.date}). <a href="#/indicator/${id}">Why two numbers</a></p>`;
   }
   return `<aside class="callout" aria-label="Why two numbers">
     <h3>Why two numbers?</h3>

@@ -3,7 +3,8 @@ import { esc } from '../lib/dom.js';
 import { formatValue } from '../lib/format.js';
 import { indicatorsInTopic, latestOf } from '../data/indicators.js';
 import { TOPICS, getTopic } from '../data/topics.js';
-import { changeBadge, mountSeriesCharts, seriesCard, statTile } from './parts.js';
+import { TWO_NUMBERS } from '../data/sources.js';
+import { changeBadge, mountSeriesCharts, seriesCard, statTile, twoNumbersNote } from './parts.js';
 
 function indicatorTable(topicId) {
   const rows = indicatorsInTopic(topicId).map((d) => {
@@ -25,7 +26,7 @@ export function render([id]) {
     <p class="eyebrow">Topic</p>
     <h1>${esc(topic.title)}</h1>
     <p class="lead">${esc(topic.intro)}</p>
-    <section class="section" aria-label="Headline figures"><div class="tiles">${topic.tiles.map((t) => statTile(t)).join('')}</div></section>
+    <section class="section" aria-label="Headline figures"><div class="tiles">${topic.tiles.map((t) => statTile(t)).join('')}</div>${topic.tiles.filter((t) => TWO_NUMBERS[t]).map((t) => twoNumbersNote(t, { compact: true })).join('')}</section>
     ${topic.stories.map((s) => seriesCard(s, { asStory: true })).join('')}
     <section class="section">
       <div class="section__head"><h2>All ${esc(topic.name.toLowerCase())} indicators</h2><a class="more" href="#/data">Full data catalogue</a></div>

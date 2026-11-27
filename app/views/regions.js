@@ -60,7 +60,7 @@ export function render(_params, query) {
       <div class="card">
         <h3>By island group</h3><p class="card__sub" id="group-sub"></p>
         <div id="group-bars"></div>
-        <p class="source">Sums of the provinces in each group.</p>
+        <p class="source">Population and land area are sums of the provinces in each group; density is the group's population divided by its land area.</p>
       </div>
     </section>
 

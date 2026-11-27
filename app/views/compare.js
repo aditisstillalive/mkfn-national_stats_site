@@ -3,7 +3,8 @@
 import { esc } from '../lib/dom.js';
 import { formatNumber } from '../lib/format.js';
 import { PEERS, PEER_METRICS, getPeerMetric } from '../data/peers.js';
-import { getIndicator, WDI_UPDATED } from '../data/indicators.js';
+import { getIndicator, pointsOf, WDI_UPDATED } from '../data/indicators.js';
+import { TWO_NUMBERS } from '../data/sources.js';
 import { barChart } from '../charts/bar-chart.js';
 import { twoNumbersNote, WDI_URL } from './parts.js';
 
@@ -13,7 +14,10 @@ function rankSentence(m) {
   const order = PEERS.map((c, i) => ({ c, v: m.values[i] })).sort((a, b) => b.v - a.v);
   const place = order.findIndex((o) => o.c.iso === 'IDN') + 1;
   const words = ['', 'highest', 'second highest', 'third highest', 'third lowest', 'second lowest', 'lowest'];
-  return `Indonesia has the ${words[place]} value of the six, at ${show(m, m.values[0])} in ${m.year}; ${order[0].c.name} is highest at ${show(m, order[0].v)}.`;
+  const other = place === 1
+    ? `next is ${order[1].c.name} at ${show(m, order[1].v)}`
+    : `${order[0].c.name} is highest at ${show(m, order[0].v)}`;
+  return `Indonesia has the ${words[place]} value of the six, at ${show(m, m.values[0])} in ${m.year}; ${other}.`;
 }
 
 function fullTable() {
@@ -36,7 +40,7 @@ export function render([id]) {
         <label class="inline">Measure
           <select class="field" id="metric-select">${PEER_METRICS.map((m) => `<option value="${m.id}"${m.id === metric.id ? ' selected' : ''}>${esc(m.name)}</option>`).join('')}</select>
         </label>
-        ${national ? `<a class="btn" href="#/indicator/${national.id}">Indonesia's trend since 1990</a>` : ''}
+        ${national ? `<a class="btn" href="#/indicator/${national.id}">Indonesia's trend since ${pointsOf(national)[0][0]}</a>` : ''}
       </div>
       <h2>${esc(metric.name)}</h2>
       <p class="card__sub">${esc(metric.unit)}, ${metric.year}${metric.note ? ` (${esc(metric.note)})` : ''}</p>
@@ -49,6 +53,7 @@ export function render([id]) {
     <section class="section">
       <h2>All measures</h2>
       ${fullTable()}
+      <p class="note small">Population here is the World Bank/UN figure, so all six countries are measured alike; BPS counts Indonesia at ${TWO_NUMBERS.population.bps.text} (${TWO_NUMBERS.population.bps.date}). <a href="#/indicator/population">Why two numbers</a></p>
       <p class="source">Source: World Bank World Development Indicators, updated ${WDI_UPDATED}. Select a measure to chart it.</p>
     </section>`;
 

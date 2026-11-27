@@ -20,7 +20,13 @@ const ROUTES = [
 const SITE = 'Angka Nusantara';
 
 function currentPath() {
-  const raw = decodeURIComponent(location.hash.replace(/^#/, '')) || '/';
+  const hash = location.hash.replace(/^#/, '');
+  let raw;
+  try {
+    raw = decodeURIComponent(hash) || '/';
+  } catch {
+    raw = hash; // e.g. #/% : left undecoded, it matches no route and shows the not-found page
+  }
   return raw.split('?')[0].replace(/\/+$/, '') || '/';
 }
 
