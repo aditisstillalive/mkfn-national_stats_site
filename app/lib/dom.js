@@ -1,4 +1,5 @@
-// Small DOM helpers: escaping text into HTML strings, building SVG nodes, and saving a file the visitor asks for.
+// Small DOM helpers: escaping text into HTML strings, building CSV, saving a file the visitor asks for, and redrawing
+// charts when their box resizes.
 
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 
@@ -6,8 +7,6 @@ const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&
 export function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, (c) => ESCAPES[c]);
 }
-
-const SVG_NS = 'http://www.w3.org/2000/svg';
 
 /** Offers text to the visitor as a downloaded file (used for CSV exports). */
 export function downloadText(filename, text, type = 'text/csv') {

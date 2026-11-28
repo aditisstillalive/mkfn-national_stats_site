@@ -19,7 +19,7 @@ export function shareBar(parts, width = 96, height = 30) {
   let x = 0;
   const rects = parts.map((p) => {
     const w = (p.value / total) * width;
-    const rect = `<rect x="${x.toFixed(1)}" y="${height / 2 - 6}" width="${Math.max(0, w - 1.5).toFixed(1)}" height="12" rx="2" class="${p.highlight ? 'is-hl' : ''}"><title>${esc(p.name)}: ${((p.value / total) * 100).toFixed(1)}%</title></rect>`;
+    const rect = `<rect x="${x.toFixed(1)}" y="${height / 2 - 6}" width="${Math.max(1, w - 1).toFixed(1)}" height="12" rx="2" class="${p.highlight ? 'is-hl' : ''}"><title>${esc(p.name)}: ${((p.value / total) * 100).toFixed(1)}%</title></rect>`;
     x += w;
     return rect;
   });

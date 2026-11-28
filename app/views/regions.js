@@ -60,7 +60,7 @@ export function render(_params, query) {
       const drawMap = () => {
         const measure = MEASURES.find((m) => m.id === state.measure);
         const host = root.querySelector('#prov-map');
-        const breaks = tileMap(host, PROVINCES, { valueOf: (p) => p[measure.id], format: measure.format });
+        tileMap(host, PROVINCES, { valueOf: (p) => p[measure.id], format: measure.format });
         root.querySelector('#prov-legend').innerHTML = mapLegend(PROVINCES.map((p) => p[measure.id]), measure);
         const groups = ISLAND_GROUPS.map((g) => groupTotals(g.id));
         const bars = root.querySelector('#group-bars');

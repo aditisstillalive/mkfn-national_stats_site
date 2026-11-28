@@ -36,7 +36,7 @@ export function render([id], query) {
     </div>
 
     ${twoNumbersNote(d.id)}
-    ${isDated(year) ? `<p class="note"><b>Dated series.</b> The latest figure the compiling agency has published is for ${year}; this page will show newer years when ${esc(d.origin.split(',')[0])} releases them.</p>` : ''}
+    ${isDated(year) ? `<p class="note"><b>Dated series.</b> The latest figure the compiling agency has published is for ${year}; this page will show newer years when ${esc(d.origin.replace(/, from .*$/, ''))} releases them.</p>` : ''}
 
     <section class="section card">
       <div class="controls">
